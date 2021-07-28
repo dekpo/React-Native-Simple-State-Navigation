@@ -1,14 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import * as Linking from 'expo-linking';
 
 export default function App() {
+
+  const instaLink = () => {
+    Linking.openURL('https://instagram.com/dekpowyna')
+  }
+
   return (
     <View style={styles.container}>
 
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={
+          () => {
+            alert('Coucou les amis !');
+          }
+        }>
           <Ionicons name="md-home" size={24} color="black" />
         </TouchableOpacity>
         <Text>Header</Text>
@@ -25,7 +35,7 @@ export default function App() {
         <TouchableOpacity>
           <Ionicons name="md-apps" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={instaLink}>
           <Ionicons name="md-logo-instagram" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>
