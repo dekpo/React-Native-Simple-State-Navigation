@@ -17,7 +17,7 @@ const SettingsPage = () => (
 );
 
 export default function App() {
-  const [page,setPage] = React.useState('Home');
+  const [page, setPage] = React.useState('Home');
 
   const instaLink = () => {
     Linking.openURL('https://instagram.com/dekpowyna')
@@ -29,20 +29,30 @@ export default function App() {
       <View style={styles.header}>
         <TouchableOpacity onPress={
           () => {
-            alert('Coucou les amis !');
+            setPage('Home');
           }
         }>
           <Ionicons name="md-home" size={24} color="black" />
         </TouchableOpacity>
         <Text>Header</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={
+          () => {
+            setPage('Settings');
+          }
+        }>
           <Ionicons name="md-settings" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
-      
-        <HomePage />
-      
+
+      {(() => {
+        switch (page) {
+          case 'Home':
+            return <HomePage />
+          case 'Settings':
+            return <SettingsPage />
+        }
+      })()}
 
       <View style={styles.footer}>
         <TouchableOpacity>
