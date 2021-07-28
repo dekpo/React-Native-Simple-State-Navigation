@@ -3,18 +3,11 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Linking from 'expo-linking';
+import HomePage from './pages/HomePage';
+import SettingsPage from './pages/SettingsPage';
+import GalleryPage from './pages/GalleryPage';
+import ContactPage from './pages/ContactPage';
 
-const HomePage = () => (
-  <View style={styles.content}>
-    <Text>Home Page</Text>
-  </View>
-);
-
-const SettingsPage = () => (
-  <View style={styles.content}>
-    <Text>Settings Page</Text>
-  </View>
-);
 
 export default function App() {
   const [page, setPage] = React.useState('Home');
@@ -51,17 +44,29 @@ export default function App() {
             return <HomePage />
           case 'Settings':
             return <SettingsPage />
+          case 'Gallery':
+            return <GalleryPage />
+          case 'Contact':
+            return <ContactPage />
         }
       })()}
 
       <View style={styles.footer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={
+          () => {
+            setPage('Gallery');
+          }
+        }>
           <Ionicons name="md-apps" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={instaLink}>
           <Ionicons name="md-logo-instagram" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={
+          () => {
+            setPage('Contact');
+          }
+        }>
           <Ionicons name="md-mail" size={24} color="black" />
         </TouchableOpacity>
       </View>
