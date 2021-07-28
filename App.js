@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
@@ -52,7 +52,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-
+      <ScrollView>
       {(() => {
         switch (page) {
           case 'Home':
@@ -65,6 +65,7 @@ export default function App() {
             return <ContactPage />
         }
       })()}
+      </ScrollView>
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={
