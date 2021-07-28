@@ -4,7 +4,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Linking from 'expo-linking';
 
+const HomePage = () => (
+  <View style={styles.content}>
+    <Text>Home Page</Text>
+  </View>
+);
+
+const SettingsPage = () => (
+  <View style={styles.content}>
+    <Text>Settings Page</Text>
+  </View>
+);
+
 export default function App() {
+  const [page,setPage] = React.useState('Home');
 
   const instaLink = () => {
     Linking.openURL('https://instagram.com/dekpowyna')
@@ -27,9 +40,9 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.content}>
-        <Text>Content</Text>
-      </View>
+      
+        <HomePage />
+      
 
       <View style={styles.footer}>
         <TouchableOpacity>
