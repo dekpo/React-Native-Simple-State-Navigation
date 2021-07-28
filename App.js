@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
+import { Ubuntu_400Regular, useFonts } from '@expo-google-fonts/ubuntu';
+import AppLoading from 'expo-app-loading';
 
 
 export default function App() {
@@ -14,6 +16,14 @@ export default function App() {
 
   const instaLink = () => {
     Linking.openURL('https://instagram.com/dekpowyna')
+  }
+
+  let [fontsLoaded] = useFonts({
+    Ubuntu_400Regular
+  });
+
+  if (!fontsLoaded){
+    return <AppLoading />
   }
 
   return (
@@ -27,7 +37,12 @@ export default function App() {
         }>
           <Ionicons name="md-home" size={24} color="black" />
         </TouchableOpacity>
-        <Text>Header</Text>
+        <Text style={
+          {
+            fontFamily:'Ubuntu_400Regular',
+            fontSize: 40
+          }
+        }>My App</Text>
         <TouchableOpacity onPress={
           () => {
             setPage('Settings');
