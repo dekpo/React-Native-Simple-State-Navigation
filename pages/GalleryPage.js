@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, FlatList, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-const getPics = async () => {
-  const response = await fetch('https://picsum.photos/v2/list?limit=24');
+const getPics = async (limit) => {
+  const response = await fetch('https://picsum.photos/v2/list?limit='+limit);
   const data = await response.json();
   return data;
 }
@@ -26,13 +26,14 @@ const ImageItem = ({img}) => {
 
 const GalleryPage = () => {
   const [photoList,setPhotoList] = React.useState([]);
+  const [limit,setLimit] = React.useState(15);
 
   React.useEffect(()=>{
-    getPics().then(data => {
+    getPics(limit).then(data => {
       // console.log(data);
       setPhotoList(data);
     })
-  },[]);
+  },[limit]);
 
   return(
     <View style={styles.content}>
@@ -44,7 +45,8 @@ const GalleryPage = () => {
       numColumns={3}
       onEndReached={
         () => {
-          console.log("Fin de la liste !")
+          setLimit(limit+6);
+          console.log("End List: ", limit);
         }
       }
       onEndReachedThreshold={0.2}
