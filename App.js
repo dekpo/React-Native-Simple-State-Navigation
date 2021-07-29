@@ -52,7 +52,8 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView>
+      
+      
       {(() => {
         switch (page) {
           case 'Home':
@@ -65,7 +66,7 @@ export default function App() {
             return <ContactPage />
         }
       })()}
-      </ScrollView>
+      
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={

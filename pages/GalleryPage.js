@@ -1,43 +1,59 @@
 import React from 'react';
-import { StyleSheet,Text, View, FlatList, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View, FlatList, Image, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const getPics = async () => {
   const response = await fetch('https://picsum.photos/v2/list?limit=24');
   const data = await response.json();
   return data;
 }
-const ImageItem = ({item}) => {
-  const urlImage = 'https://picsum.photos/id/'+item.id+'/200/200';
+
+const ImageItem = ({img}) => {
+  const width = Math.round(windowWidth/3);
+  const urlImage = 'https://picsum.photos/id/'+img.id+'/'+width+'/'+width;
   return (
     <View>
       <Image
       source= {
-        {width: 200,
-        height: 200,
+        {width:  width,
+        height: width,
         uri: urlImage}
       } />
     </View>
   )
 }
+
 const GalleryPage = () => {
   const [photoList,setPhotoList] = React.useState([]);
 
   React.useEffect(()=>{
     getPics().then(data => {
-      console.log(data);
+      // console.log(data);
       setPhotoList(data);
     })
   },[]);
 
   return(
     <View style={styles.content}>
-      <Text>Gallery Page</Text>
       <FlatList data={photoList}
       renderItem={ 
-        ({item}) => (<ImageItem item={item} />)
+        ({item}) => (<ImageItem img={item} />)
       }
-      keyExtractor={(item)=>item.id}
-      numColumns={3} />
+      keyExtractor={(elem)=>elem.id}
+      numColumns={3}
+      onEndReached={
+        () => {
+          console.log("Fin de la liste !")
+        }
+      }
+      onEndReachedThreshold={0.5}
+      refreshing={true}
+      onRefresh={
+        () => {
+          console.log("She's fresh so fresh !")
+        }
+      } />
     </View>
   )
 
@@ -48,7 +64,7 @@ export default GalleryPage
 const styles = StyleSheet.create({
   content: {
     flex: 4,
-    padding: 20,
+    padding: 0,
     alignItems: 'center',
     justifyContent: 'center'
   }
