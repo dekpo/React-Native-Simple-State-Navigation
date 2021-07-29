@@ -47,13 +47,8 @@ const GalleryPage = () => {
           console.log("Fin de la liste !")
         }
       }
-      onEndReachedThreshold={0.5}
-      refreshing={true}
-      onRefresh={
-        () => {
-          console.log("She's fresh so fresh !")
-        }
-      } />
+      onEndReachedThreshold={0.2}
+       />
     </View>
   )
 
