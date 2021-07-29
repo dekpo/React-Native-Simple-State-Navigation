@@ -6,13 +6,14 @@ import * as Linking from 'expo-linking';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
 import GalleryPage from './pages/GalleryPage';
-import ContactPage from './pages/ContactPage';
+import AudioPage from './pages/AudioPage';
 import { Ubuntu_400Regular, useFonts } from '@expo-google-fonts/ubuntu';
 import AppLoading from 'expo-app-loading';
 
 
 export default function App() {
   const [page, setPage] = React.useState('Home');
+  const [isPlaying,setIsPlaying] = React.useState(false);
 
   const instaLink = () => {
     Linking.openURL('https://instagram.com/dekpowyna')
@@ -24,6 +25,12 @@ export default function App() {
 
   if (!fontsLoaded){
     return <AppLoading />
+  }
+
+  const soundToggle = () => {
+    setIsPlaying(!isPlaying);
+    console.log('isPlaying?: ',isPlaying);
+    return isPlaying;
   }
 
   return (
@@ -62,8 +69,8 @@ export default function App() {
             return <SettingsPage />
           case 'Gallery':
             return <GalleryPage />
-          case 'Contact':
-            return <ContactPage />
+          case 'Audio':
+            return <AudioPage toggle={soundToggle} />
         }
       })()}
       
@@ -81,10 +88,10 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity onPress={
           () => {
-            setPage('Contact');
+            setPage('Audio');
           }
         }>
-          <Ionicons name="md-mail" size={24} color="black" />
+          <Ionicons name="play-circle" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
