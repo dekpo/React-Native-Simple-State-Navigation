@@ -9,11 +9,31 @@ import GalleryPage from './pages/GalleryPage';
 import AudioPage from './pages/AudioPage';
 import { Ubuntu_400Regular, useFonts } from '@expo-google-fonts/ubuntu';
 import AppLoading from 'expo-app-loading';
+import { Audio } from 'expo-av';
 
+const AUDIO_STREAM = "https://radio.dekpo.com/stream.mp3";
+// ou voir la liste ici https://www.hionline.eu/streaming-url/
 
 export default function App() {
   const [page, setPage] = React.useState('Home');
-  const [isPlaying,setIsPlaying] = React.useState(false);
+  const [sound,setSound] = React.useState(null);
+
+  async function playMySound() {
+    if (sound ===  null) {
+      const { sound } = await Audio.Sound.createAsync({
+        uri: AUDIO_STREAM
+      });
+      setSound(sound);
+      console.log('Playing Sound');
+      await sound.playAsync();
+    } else {
+      setSound(null);
+          console.log("Stopping Sound");
+          await sound.stopAsync();
+          //await sound.unloadAsync();
+    }
+  }
+  
 
   const instaLink = () => {
     Linking.openURL('https://instagram.com/dekpowyna')
@@ -25,12 +45,6 @@ export default function App() {
 
   if (!fontsLoaded){
     return <AppLoading />
-  }
-
-  const soundToggle = () => {
-    setIsPlaying(!isPlaying);
-    console.log('isPlaying?: ',isPlaying);
-    return isPlaying;
   }
 
   return (
@@ -70,7 +84,7 @@ export default function App() {
           case 'Gallery':
             return <GalleryPage />
           case 'Audio':
-            return <AudioPage toggle={soundToggle} />
+            return <AudioPage toggle={playMySound} sound={sound} />
         }
       })()}
       
